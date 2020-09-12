@@ -97,7 +97,36 @@ class SortingRobot:
         Sort the robot's list.
         """
         # Fill this out
-        pass
+        
+        while True:
+            # grabs the first item in the list
+            self.swap_item()
+            # going to have to use the light to tell it which way to move along the array if on move from from the right to left if light is off we will move left to right
+            if self.light_is_on():
+                print(self._item)
+                # if compare gets 1 then we know the held item is greater and we need to swap it to move it right.
+                if self.compare_item() == 1:
+                    self.swap_item()
+                if self.compare_item() == None:
+                    # at the end of array need to traverse back across the array
+                    self.swap_item()
+                    self.set_light_off()
+                # dont need to swap but need to keep traversing the array
+                else:
+                    self.move_left()
+            else:
+                #  reverse above because we are moving in the opposite direction if the held object is smaller we want to do the swap
+                if self.compare_item() == -1:
+                    self.swap_item()
+                #  find out when we reach the far right side of the array if we aren't there yet then move to the right
+                if self.can_move_right():
+                    self.move_right()
+                else:
+                    #  need to dump the largest item now that we are all the way on the right of the array
+                    self.swap_item()
+                    if self.compare_item() == None: 
+                        return False
+                    self.set_light_on()
 
 
 if __name__ == "__main__":
